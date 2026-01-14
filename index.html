@@ -761,11 +761,11 @@ a:hover {
 
         function animateWaves() {
             time += 0.012;
-
-            generateWave(waves[0], 60, time * 180, time);
-            generateWave(waves[1], 100, -time * 120, time * 1.3);
-            generateWave(waves[2], 160, time * 90, -time * 0.8);
-
+            // Audio-responsive wave amplitudes (subtle but clear)
+            const e = (typeof audioEnabled !== "undefined" && audioEnabled) ? audioEnergy * 120 : 0;
+            generateWave(waves[0], 60 + e, time * 180, time);
+            generateWave(waves[1], 100 + e * 0.8, -time * 120, time * 1.3);
+            generateWave(waves[2], 160 + e * 0.6, time * 90, -time * 0.8);
             requestAnimationFrame(animateWaves);
         }
 
@@ -967,15 +967,17 @@ a:hover {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = 'rgba(124,124,255,0.15)';
 
+            // Amplified canvas response to audio when enabled
+            const energy = audioEnabled ? audioEnergy : 0;
             particles.forEach(p => {
-                p.x += p.vx * (1 + (audioEnergy || 0) * 4);
-                p.y += p.vy * (1 + (audioEnergy || 0) * 4);
+                p.x += p.vx * (1 + energy * 10);
+                p.y += p.vy * (1 + energy * 10);
 
                 if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
                 if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, 1.5 + (audioEnergy || 0) * 3, 0, Math.PI * 2);
+                ctx.arc(p.x, p.y, 1.5 + energy * 6, 0, Math.PI * 2);
                 ctx.fill();
             });
 
@@ -1022,3 +1024,12 @@ a:hover {
 </body>
 
 </html>
+        // Audio-reactive background glow
+        function audioBgPulse() {
+          const glow = audioEnabled ? audioEnergy * 0.6 : 0;
+          document.querySelectorAll('.bg-layer').forEach((bg, i) => {
+            bg.style.opacity = 0.25 + glow;
+          });
+          requestAnimationFrame(audioBgPulse);
+        }
+        audioBgPulse();
