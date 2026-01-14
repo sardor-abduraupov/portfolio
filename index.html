@@ -347,6 +347,13 @@ a:hover {
   backdrop-filter:blur(12px);cursor:pointer">
         Theme
     </button>
+    <button id="audioToggle" style="position:fixed;top:5.5rem;right:2rem;z-index:300;
+  background:rgba(255,255,255,.08);
+  color:inherit;border:1px solid rgba(255,255,255,.2);
+  padding:.6rem 1rem;border-radius:999px;
+  backdrop-filter:blur(12px);cursor:pointer">
+      Experimental Audio
+    </button>
     <!-- =========================
      BACKGROUND VISUAL SYSTEM
 ========================== -->
@@ -927,26 +934,35 @@ a:hover {
         }));
 
         let audioEnergy = 0;
-        /* =========================
-           AUDIO REACTIVE ENGINE
-        ========================= */
-        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-            const audioCtx = new AudioContext();
-            const analyser = audioCtx.createAnalyser();
-            const mic = audioCtx.createMediaStreamSource(stream);
+        // --- Experimental Audio Mode State ---
+        let audioEnabled = false;
+        let audioCtx, analyser, mic, data;
+
+        // --- Audio Activation on Click ---
+        function enableAudioReactive() {
+          if (audioEnabled) return;
+
+          navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+            audioCtx = new AudioContext();
+            analyser = audioCtx.createAnalyser();
+            mic = audioCtx.createMediaStreamSource(stream);
 
             mic.connect(analyser);
             analyser.fftSize = 256;
-            const data = new Uint8Array(analyser.frequencyBinCount);
+            data = new Uint8Array(analyser.frequencyBinCount);
 
-            function analyse() {
-                analyser.getByteFrequencyData(data);
-                audioEnergy =
-                    data.reduce((a, b) => a + b, 0) / data.length / 255;
-                setTimeout(analyse, 50);
-            }
-            analyse();
-        }).catch(() => { });
+            audioEnabled = true;
+            audioLoop();
+          }).catch(() => {});
+        }
+
+        function audioLoop() {
+          if (!audioEnabled) return;
+          analyser.getByteFrequencyData(data);
+          audioEnergy = data.reduce((a, b) => a + b, 0) / data.length / 255;
+          requestAnimationFrame(audioLoop);
+        }
+
         function drawParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = 'rgba(124,124,255,0.15)';
@@ -979,6 +995,10 @@ a:hover {
             document.documentElement.style.display = 'none';
             document.documentElement.offsetHeight; // force reflow
             document.documentElement.style.display = '';
+        };
+        // Experimental Audio Toggle Button
+        document.getElementById('audioToggle').onclick = () => {
+          enableAudioReactive();
         };
         /* =========================
    PERFORMANCE MONITOR
