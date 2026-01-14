@@ -1017,6 +1017,15 @@ a:hover {
             requestAnimationFrame(fps);
         }
         requestAnimationFrame(fps);
+        // Audio-reactive background glow
+function audioBgPulse() {
+  const glow = audioEnabled ? audioEnergy * 0.6 : 0;
+  document.querySelectorAll('.bg-layer').forEach(bg => {
+    bg.style.opacity = 0.25 + glow;
+  });
+  requestAnimationFrame(audioBgPulse);
+}
+audioBgPulse();
     </script>
     <div id="perf" style="position:fixed;bottom:1rem;right:1rem;
   font-size:.75rem;color:var(--fg-muted);z-index:400">
@@ -1024,12 +1033,3 @@ a:hover {
 </body>
 
 </html>
-        // Audio-reactive background glow
-        function audioBgPulse() {
-          const glow = audioEnabled ? audioEnergy * 0.6 : 0;
-          document.querySelectorAll('.bg-layer').forEach((bg, i) => {
-            bg.style.opacity = 0.25 + glow;
-          });
-          requestAnimationFrame(audioBgPulse);
-        }
-        audioBgPulse();
