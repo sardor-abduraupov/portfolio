@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sardor Rustamovich — Systems, Design, Code</title>
+
+    <!-- META -->
+    <meta name="description"
+        content="Experimental portfolio of Sardor Rustamovich. Systems thinking, design engineering, motion, and intelligent software." />
+    <meta name="theme-color" content="#05060b" />
+
+    <!-- FONTS (will be expanded later) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet" />
+
+    <!-- PLACEHOLDER: CSS SYSTEM COMES IN BLOCK 2 -->
+    <style>
+        /* =====================================================
+   GLOBAL RESET & BASICS
+===================================================== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--bg-main);
+            color: var(--fg-main);
+            overflow-x: hidden;
+        }
+
+        /* =====================================================
+   DESIGN TOKENS (CORE IDENTITY)
+===================================================== */
+        :root {
+            /* Backgrounds */
+            --bg-main: #05060b;
+            --bg-soft: #0c0f1f;
+            --bg-card: rgba(255, 255, 255, 0.06);
+
+            /* Foregrounds */
+            --fg-main: #f5f7ff;
+            --fg-muted: #9fa6d9;
+            --fg-soft: #c7cbee;
+
+            /* Accents */
+            --accent-a: #7c7cff;
+            --accent-b: #5ef2c2;
+            --accent-c: #ff7ad9;
+            --accent-d: #ffd36a;
+
+            /* Radii */
+            --radius-xs: 4px;
+            --radius-sm: 8px;
+            --radius-md: 18px;
+            --radius-lg: 32px;
+
+            /* Blur */
+            --blur-sm: 8px;
+            --blur-md: 24px;
+            --blur-lg: 60px;
+
+            /* Spacing scale */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 1rem;
+            --space-4: 2rem;
+            --space-5: 4rem;
+            --space-6: 8rem;
+
+            /* Motion */
+            --ease-main: cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-strong: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body.light {
+            --bg-main: #f7f8fc;
+            --fg-main: #0b0d12;
+            --fg-muted: #555;
+            --bg-card: rgba(0, 0, 0, 0.06);
+            --accent-a: #5b5bff;
+            --accent-b: #00bfa5;
+            --accent-c: #d81b60;
+        }
+
+        /* =====================================================
+   TYPOGRAPHY SYSTEM
+===================================================== */
+        h1,
+        h2,
+        h3,
+        h4 {
+            margin: 0 0 var(--space-3) 0;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        h1 {
+            font-size: clamp(6rem, 14vw, 14rem);
+            line-height: 0.9;
+        }
+
+        h2 {
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            line-height: 1.05;
+        }
+
+        h3 {
+            font-size: 2rem;
+        }
+
+        p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            max-width: 72ch;
+            color: var(--fg-muted);
+        }
+
+        /* =====================================================
+   NAVIGATION (INTERNATIONAL FEEL)
+===================================================== */
+        nav {
+            position: fixed;
+            left: 3vw;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+
+        nav a {
+            display: block;
+            margin: 1rem 0;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-decoration: none;
+            color: var(--fg-muted);
+            transition: color 0.3s var(--ease-main);
+        }
+
+        nav a.active {
+            color: var(--fg-main);
+        }
+
+        /* =====================================================
+   PAGE LAYOUT
+===================================================== */
+        .page {
+            position: absolute;
+            inset: 0;
+            padding: 22vh 14vw 24vh;
+            overflow-y: auto;
+            display: none;
+            box-sizing: border-box;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* =====================================================
+   GLASS CARDS (CONTENT DENSITY)
+===================================================== */
+        .card {
+            margin: var(--space-5) 0;
+            padding: var(--space-5);
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            backdrop-filter: blur(var(--blur-md));
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        /* =====================================================
+   BACKGROUND VISUAL LAYERS
+===================================================== */
+        .bg-layer {
+            position: fixed;
+            inset: -20%;
+            filter: blur(var(--blur-lg));
+            opacity: 0.35;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .bg-a {
+            background: radial-gradient(circle at 30% 20%, var(--accent-a), transparent 60%);
+        }
+
+        .bg-b {
+            background: radial-gradient(circle at 70% 60%, var(--accent-b), transparent 60%);
+            mix-blend-mode: screen;
+        }
+
+        .bg-c {
+            background: radial-gradient(circle at 40% 80%, var(--accent-c), transparent 60%);
+            mix-blend-mode: overlay;
+        }
+
+        /* =====================================================
+   MARQUEE / LARGE BACKGROUND TEXT
+===================================================== */
+        .marquee {
+            position: absolute;
+            bottom: 10%;
+            left: 0;
+            white-space: nowrap;
+            font-size: 12vw;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            opacity: 0.04;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .page>*:last-child {
+            margin-bottom: 6rem;
+        }
+
+        * {
+            max-width: 100vw;
+        }
+
+        @media (max-width: 768px) {
+            .marquee {
+                display: none;
+            }
+        }
+
+        /* =====================================================
+   SCROLLBAR (POLISH)
+===================================================== */
+        .page::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .page::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        @media (max-width: 768px) {
+            #character {
+                width: 220px;
+                opacity: 0.35;
+            }
+        }
+
+        .avatar {
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 1200px) {
+            .avatar {
+                width: 260px;
+                height: 260px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .avatar {
+                width: 180px;
+                height: 180px;
+            }
+        }
+
+        .hero-avatar {
+            position: absolute;
+            top: 26vh;
+            right: 10vw;
+            z-index: 2;
+        }
+
+        @media (max-width: 1200px) {
+            .hero-avatar {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 3rem 0 4rem auto;
+                display: flex;
+                justify-content: flex-end;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-avatar {
+                justify-content: center;
+                margin: 3rem auto;
+            }
+        }
+
+        .hero-text {
+            position: relative;
+            z-index: 3;
+        }
+        a {
+  color: var(--fg-main);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+a:hover {
+  border-bottom-color: var(--accent-a);
+  color: var(--fg-main);
+}
+    </style>
+    <!-- =========================
+     ANIMATION LIBRARIES
+========================== -->
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+</head>
+
+<body>
+    <!-- =========================
+     CUSTOM CURSOR
+========================== -->
+    <div class="cursor"></div>
+    <button id="themeToggle" style="position:fixed;top:2rem;right:2rem;z-index:300;
+  background:rgba(255,255,255,.08);
+  color:inherit;border:1px solid rgba(255,255,255,.2);
+  padding:.6rem 1rem;border-radius:999px;
+  backdrop-filter:blur(12px);cursor:pointer">
+        Theme
+    </button>
+    <!-- =========================
+     BACKGROUND VISUAL SYSTEM
+========================== -->
+
+    <!-- Soft gradient layers -->
+    <div class="bg-layer bg-a"></div>
+    <div class="bg-layer bg-b"></div>
+    <div class="bg-layer bg-c"></div>
+
+    <!-- Generative SVG illustration -->
+    <svg id="background-svg" viewBox="0 0 1600 900" preserveAspectRatio="none" style="
+       position: fixed;
+       inset: 0;
+       width: 100%;
+       height: 100%;
+       pointer-events: none;
+       z-index: -1;
+     ">
+        <path id="wave-1" />
+        <path id="wave-2" />
+        <path id="wave-3" />
+    </svg>
+    <!-- Strong SVG illustrations (Cassie-style) -->
+    <svg id="illustrations" viewBox="0 0 1600 900" preserveAspectRatio="none"
+        style="position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.6">
+        <circle cx="300" cy="200" r="140" stroke="var(--accent-a)" fill="none" stroke-width="2" />
+        <rect x="1000" y="120" width="260" height="260" rx="32" stroke="var(--accent-b)" fill="none" stroke-width="2" />
+        <path d="M200 700 C500 500 900 900 1400 600" stroke="var(--accent-c)" fill="none" stroke-width="2" />
+    </svg>
+    <canvas id="gen-canvas" style="position:fixed;inset:0;z-index:-2;pointer-events:none"></canvas>
+    <!-- =========================
+     CHARACTER ILLUSTRATION LAYER
+========================== -->
+    <div id="character-layer" style="position:fixed;inset:0;pointer-events:none;z-index:-1;">
+        <svg id="character" viewBox="0 0 600 600"
+            style="position:absolute;right:8vw;bottom:6vh;width:380px;max-width:45vw;">
+
+            <!-- body -->
+            <circle cx="300" cy="200" r="70" fill="#7c7cff" />
+            <rect x="230" y="280" width="140" height="140" rx="28" fill="#8b8bff" />
+
+            <!-- laptop -->
+            <rect x="240" y="340" width="120" height="70" rx="12" fill="#e5e7ff" />
+
+            <!-- floating icons -->
+            <g id="char-icons">
+                <rect x="120" y="170" width="60" height="40" rx="8" fill="#5ef2c2" />
+                <circle cx="470" cy="190" r="24" fill="#ff7ad9" />
+                <rect x="420" y="260" width="50" height="32" rx="6" fill="#ffd36a" />
+            </g>
+        </svg>
+    </div>
+    <!-- =========================
+       GLOBAL NAVIGATION
+  ========================== -->
+    <nav id="global-nav">
+        <a href="#home" data-route="home">HOME</a>
+        <a href="#profile" data-route="profile">PROFILE</a>
+        <a href="#projects" data-route="projects">WORK</a>
+        <a href="#vision" data-route="vision">VISION</a>
+        <a href="#contact" data-route="contact">CONTACT</a>
+    </nav>
+
+    <!-- =========================
+       PAGE: HOME
+  ========================== -->
+    <section id="home" class="page active" data-page>
+        <div style="margin-bottom:6rem">
+            <h1>SR</h1>
+        </div>
+
+        <div class="hero-avatar">
+            <div class="avatar">
+                <img src="/з.jpeg" alt="SR avatar" />
+            </div>
+        </div>
+
+        <div class="hero-text">
+            <p>
+                Designer. Developer. Student.
+                Building intelligent systems that help people move forward.
+            </p>
+
+            <p>
+                Focused on AI, product design, and long-term system thinking.
+                Currently studying, building applications, and preparing for
+                Ivy League and MIT-level engineering paths.
+            </p>
+
+            <div class="card">
+                <p><strong>Primary Work</strong></p>
+                <p>
+                    Axis — AI platform for faster, more effective learning<br>
+                    SRGram — privacy-first messenger with integrated AI
+                </p>
+            </div>
+            <div class="card">
+                <p><strong>What I Build</strong></p>
+                <p>
+                    I work on AI-powered educational platforms, privacy-focused communication tools,
+                    and experimental applications that explore how intelligent systems can
+                    support learning and productivity.
+                </p>
+            </div>
+        </div>
+        <div class="marquee">
+            SR · DESIGN · AI · SYSTEMS · FUTURE ·
+        </div>
+    </section>
+
+    <!-- =========================
+       PAGE: ABOUT
+  ========================== -->
+    <section id="about" class="page" data-page>
+        <h1>About</h1>
+
+        <div class="card">
+            <p>
+                My name is Sardor Abduraupov. I am a student full-stack developer,
+                UI/UX designer, and founder with a strong interest in systems thinking,
+                engineering discipline, and long-term technological impact.
+            </p>
+
+            <p>
+                I study within the International Baccalaureate framework, focusing on
+                mathematics, computer science, and advanced English. Alongside formal
+                education, I build real software products — not prototypes, but systems
+                designed to evolve.
+            </p>
+
+            <p>
+                I am particularly interested in how complex systems behave over time:
+                how architecture decisions compound, how interfaces influence cognition,
+                and how tooling can amplify human capability rather than distract from it.
+            </p>
+
+            <p>
+                My goal is to study at a top global university and contribute to
+                international-scale technology products that prioritize clarity,
+                robustness, and ethical impact.
+            </p>
+        </div>
+
+        <div class="card">
+            <p>
+                Beyond engineering, I care deeply about learning itself — how knowledge
+                is structured, retained, and applied. Writing, designing, and building
+                are all extensions of the same process: thinking in public and refining
+                ideas through iteration.
+            </p>
+        </div>
+    </section>
+
+    <!-- =========================
+     PAGE: PROFILE
+========================== -->
+    <section id="profile" class="page" data-page>
+        <h1>Profile</h1>
+        <div class="card">
+            <p>
+                I am <strong>Sardor Abduraupov</strong> — a student designer and developer
+                focused on building intelligent systems that help people shape their future.
+            </p>
+            <p>
+                I am currently finishing school while preparing for top global universities,
+                including the Ivy League and MIT. Alongside academics, I actively build
+                real-world applications with a strong focus on artificial intelligence.
+            </p>
+            <p>
+                My work combines product thinking, engineering discipline, and design clarity.
+                I care deeply about how systems scale over time — technically and cognitively.
+            </p>
+        </div>
+
+        <div class="card">
+            <p><strong>Current Focus</strong></p>
+            <p>
+                — studying and strengthening academic foundations<br>
+                — building and shipping personal applications<br>
+                — deepening expertise in AI systems and models<br>
+                — preparing to build my own startup
+            </p>
+        </div>
+        <div class="card">
+            <p><strong>Skills & Focus</strong></p>
+            <p>
+                — frontend development (HTML, CSS, JavaScript)<br>
+                — UI/UX and visual design<br>
+                — AI systems and experimentation<br>
+                — product thinking and architecture<br>
+                — long-term system design
+            </p>
+        </div>
+    </section>
+
+    <!-- =========================
+       PAGE: VISION
+  ========================== -->
+    <section id="vision" class="page" data-page>
+        <h1>Vision & Philosophy</h1>
+        <div class="card">
+            <p>
+                I design systems with longevity in mind. My focus is not on short-term trends,
+                but on architectures that remain coherent as complexity increases.
+            </p>
+            <p>
+                I believe software should feel calm, predictable, and intentional.
+                Motion exists to guide understanding, not to distract attention.
+            </p>
+            <p>
+                Good systems compound. Poor systems accumulate hidden cost.
+                This principle guides every technical decision I make.
+            </p>
+        </div>
+        <div class="card">
+            <p>
+                I am especially interested in the intersection of cognition and interface design:
+                how layout, hierarchy, and feedback influence how people think and work.
+            </p>
+        </div>
+    </section>
+
+    <!-- =========================
+       PAGE: CONTACT / STAY IN TOUCH
+  ========================== -->
+    <section id="contact" class="page" data-page>
+        <h1>Stay in Touch</h1>
+
+        <div class="card">
+            <p>
+                I am always open to conversations, collaboration, and opportunities
+                related to technology, AI, education, and building meaningful systems.
+            </p>
+            <p>
+                If you want to reach out, discuss ideas, or follow my work, you can
+                contact me through the channels below.
+            </p>
+        </div>
+
+        <div class="card" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem">
+            <div>
+                <p><strong>Email</strong></p>
+                <p>
+                    <a href="mailto:abduraupov.s.r@gmail.com">
+                        abduraupov.s.r@gmail.com
+                    </a>
+                </p>
+            </div>
+
+            <div>
+                <p><strong>Telegram</strong></p>
+                <p>
+                    <a href="https://t.me/sardorabduraupov" target="_blank" rel="noopener">
+                        @sardorabduraupov
+                    </a>
+                </p>
+            </div>
+
+            <div>
+                <p><strong>Instagram</strong></p>
+                <p>
+                    <a href="https://instagram.com/srabduraupov" target="_blank" rel="noopener">
+                        @srabduraupov
+                    </a>
+                </p>
+            </div>
+
+            <div>
+                <p><strong>Facebook</strong></p>
+                <p>
+                    <a href="https://facebook.com/srabduraupov" target="_blank" rel="noopener">
+                        @srabduraupov
+                    </a>
+                </p>
+            </div>
+
+            <div>
+                <p><strong>X (Twitter)</strong></p>
+                <p>
+                    <a href="https://x.com/AbduraupovS" target="_blank" rel="noopener">
+                        @AbduraupovS
+                    </a>
+                </p>
+            </div>
+
+            <div>
+                <p><strong>GitHub</strong></p>
+                <p>
+                    <a href="https://github.com/sardor-abduraupov" target="_blank" rel="noopener">
+                        @sardor-abduraupov
+                    </a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================
+       PAGE: PROJECTS
+  ========================== -->
+    <section id="projects" class="page" data-page>
+        <h1>Work</h1>
+
+        <div class="card">
+            <h3>Axis</h3>
+            <p>
+                Axis is an AI-powered educational platform designed to help students
+                study faster and more effectively. It combines summaries, guidance,
+                and structured learning support in one place.
+            </p>
+            <p>
+                Focus areas:<br>
+                — AI-assisted explanations<br>
+                — learning organization<br>
+                — productivity for students
+            </p>
+        </div>
+        <div class="card">
+            <p>
+                Axis is designed as a long-term system, not a one-off app.
+                The focus is on reducing cognitive load for students while
+                keeping learning structured, guided, and adaptable.
+            </p>
+        </div>
+        <div class="card">
+            <h3>SRGram</h3>
+            <p>
+                SRGram is a privacy-first messenger with integrated AI (Gemini chat).
+                It explores how intelligent assistance can exist inside communication
+                tools without compromising privacy.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Additional Projects</h3>
+            <p>
+                Educational tools, web applications, and experimental AI-driven products
+                built as part of ongoing learning and exploration.
+            </p>
+        </div>
+    </section>
+
+
+    <!-- =========================
+       ROUTING SCRIPT (CORE)
+  ========================== -->
+    <script>
+        (function () {
+            const routePages = document.querySelectorAll('[data-page]');
+            const links = document.querySelectorAll('#global-nav a');
+
+            function route() {
+                const hash = location.hash.replace('#', '') || 'home';
+
+                routePages.forEach(page => {
+                    page.classList.toggle('active', page.id === hash);
+                });
+
+                links.forEach(link => {
+                    link.classList.toggle(
+                        'active',
+                        link.getAttribute('data-route') === hash
+                    );
+                });
+            }
+
+            window.addEventListener('hashchange', route);
+            route();
+        })();
+    </script>
+    <!-- =========================
+     GENERATIVE VISUAL ENGINE
+========================== -->
+    <script>
+        const svg = document.getElementById('background-svg');
+        const waves = [
+            document.getElementById('wave-1'),
+            document.getElementById('wave-2'),
+            document.getElementById('wave-3')
+        ];
+
+        // SVG styling (kept in JS for flexibility later)
+        waves.forEach((wave, i) => {
+            wave.setAttribute('fill', 'none');
+            wave.setAttribute('stroke-width', 1.2);
+            wave.setAttribute(
+                'stroke',
+                ['var(--accent-a)', 'var(--accent-b)', 'var(--accent-c)'][i]
+            );
+            wave.style.opacity = 0.25;
+        });
+
+        function generateWave(path, amplitude, offset, phase) {
+            let d = 'M 0 450 ';
+            for (let x = 0; x <= 1600; x += 32) {
+                const y =
+                    450 +
+                    Math.sin((x + offset) / 140 + phase) * amplitude +
+                    Math.sin((x + offset) / 60) * (amplitude * 0.25);
+                d += `L ${x} ${y} `;
+            }
+            path.setAttribute('d', d);
+        }
+
+        let time = 0;
+
+        function animateWaves() {
+            time += 0.012;
+
+            generateWave(waves[0], 60, time * 180, time);
+            generateWave(waves[1], 100, -time * 120, time * 1.3);
+            generateWave(waves[2], 160, time * 90, -time * 0.8);
+
+            requestAnimationFrame(animateWaves);
+        }
+
+        animateWaves();
+    </script>
+    <!-- =========================
+     MOTION & INTERACTION ENGINE
+========================== -->
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        /* ---------------------------------
+           CURSOR PHYSICS
+        --------------------------------- */
+        if ('ontouchstart' in window) {
+            document.querySelector('.cursor').style.display = 'none';
+        } else {
+            const cursor = document.querySelector('.cursor');
+            let cursorX = 0, cursorY = 0;
+            let targetX = 0, targetY = 0;
+            window.addEventListener('mousemove', e => {
+                targetX = e.clientX;
+                targetY = e.clientY;
+            });
+            function animateCursor() {
+                cursorX += (targetX - cursorX) * 0.15;
+                cursorY += (targetY - cursorY) * 0.15;
+                cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+        }
+
+        /* ---------------------------------
+           SPLIT TEXT (HEADINGS)
+        --------------------------------- */
+        document.querySelectorAll('.page h1').forEach(heading => {
+            const text = heading.textContent;
+            heading.innerHTML = text
+                .split('')
+                .map(char => `<span class="char">${char === ' ' ? '&nbsp;' : char}</span>`)
+                .join('');
+
+            gsap.from(heading.querySelectorAll('.char'), {
+                y: 140,
+                opacity: 0,
+                stagger: 0.018,
+                duration: 1.4,
+                ease: 'power4.out',
+                scrollTrigger: {
+                    trigger: heading,
+                    start: 'top 80%'
+                }
+            });
+        });
+
+        /* ---------------------------------
+           PAGE TRANSITION ANIMATION
+        --------------------------------- */
+        function animatePageIn(page) {
+            gsap.fromTo(
+                page,
+                { opacity: 0, y: 80 },
+                { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' }
+            );
+        }
+
+        function animateActivePage() {
+            const active = document.querySelector('.page.active');
+            if (!active) return;
+            gsap.fromTo(active, { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out' });
+        }
+        window.addEventListener('hashchange', animateActivePage);
+        animateActivePage();
+        function moveCharacter(page) {
+            const map = {
+                home: { x: 0, y: 0, scale: 1 },
+                profile: { x: -120, y: -40, scale: 0.9 },
+                projects: { x: -80, y: -120, scale: 0.85 },
+                vision: { x: -160, y: -80, scale: 0.9 },
+                contact: { x: -60, y: -40, scale: 0.85 }
+            };
+            const p = map[page] || map.home;
+            gsap.to('#character', {
+                x: p.x,
+                y: p.y,
+                scale: p.scale,
+                duration: 1.2,
+                ease: 'power3.out'
+            });
+        }
+
+        window.addEventListener('hashchange', () => {
+            moveCharacter(location.hash.replace('#', ''));
+        });
+
+        moveCharacter(location.hash.replace('#', '') || 'home');
+        /* ---------------------------------
+           SCROLL-DRIVEN BACKGROUND DEPTH
+        --------------------------------- */
+        gsap.to('.bg-a', {
+            x: 200,
+            y: 120,
+            scrollTrigger: {
+                scrub: true
+            }
+        });
+
+        gsap.to('.bg-b', {
+            x: -240,
+            y: -180,
+            scrollTrigger: {
+                scrub: true
+            }
+        });
+
+        gsap.to('.bg-c', {
+            x: 180,
+            y: -260,
+            scrollTrigger: {
+                scrub: true
+            }
+        });
+
+        // Illustration motion
+        gsap.to('#illustrations circle', { y: -120, scrollTrigger: { scrub: true } });
+        gsap.to('#illustrations rect', { y: 160, rotate: 8, transformOrigin: 'center', scrollTrigger: { scrub: true } });
+        gsap.to('#illustrations path', { strokeDasharray: 1200, strokeDashoffset: 1200, scrollTrigger: { scrub: true } });
+        // Character idle motion
+        gsap.to('#character', {
+            y: -12,
+            duration: 2.4,
+            yoyo: true,
+            repeat: -1,
+            ease: 'sine.inOut'
+        });
+
+        gsap.to('#char-icons > *', {
+            y: -20,
+            stagger: 0.3,
+            duration: 2,
+            yoyo: true,
+            repeat: -1,
+            ease: 'sine.inOut'
+        });
+    </script>
+    <script>
+        /* =========================
+           CANVAS GENERATIVE FIELD
+        ========================= */
+        const canvas = document.getElementById('gen-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const particles = Array.from({ length: 90 }, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.25,
+            vy: (Math.random() - 0.5) * 0.25
+        }));
+
+        let audioEnergy = 0;
+        /* =========================
+           AUDIO REACTIVE ENGINE
+        ========================= */
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+            const audioCtx = new AudioContext();
+            const analyser = audioCtx.createAnalyser();
+            const mic = audioCtx.createMediaStreamSource(stream);
+
+            mic.connect(analyser);
+            analyser.fftSize = 256;
+            const data = new Uint8Array(analyser.frequencyBinCount);
+
+            function analyse() {
+                analyser.getByteFrequencyData(data);
+                audioEnergy =
+                    data.reduce((a, b) => a + b, 0) / data.length / 255;
+                setTimeout(analyse, 50);
+            }
+            analyse();
+        }).catch(() => { });
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'rgba(124,124,255,0.15)';
+
+            particles.forEach(p => {
+                p.x += p.vx * (1 + (audioEnergy || 0) * 4);
+                p.y += p.vy * (1 + (audioEnergy || 0) * 4);
+
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 1.5 + (audioEnergy || 0) * 3, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+        /* =========================
+   THEME TOGGLE
+========================= */
+        const btn = document.getElementById('themeToggle');
+        const saved = localStorage.getItem('theme');
+        if (saved) document.body.classList.add(saved);
+
+        btn.onclick = () => {
+            const isLight = document.body.classList.toggle('light');
+            localStorage.setItem('theme', isLight ? 'light' : '');
+            document.documentElement.style.display = 'none';
+            document.documentElement.offsetHeight; // force reflow
+            document.documentElement.style.display = '';
+        };
+        /* =========================
+   PERFORMANCE MONITOR
+========================= */
+        let frames = 0;
+        let last = performance.now();
+        function fps(now) {
+            frames++;
+            if (now - last >= 1000) {
+                document.getElementById('perf').textContent = `FPS ${frames}`;
+                frames = 0;
+                last = now;
+            }
+            requestAnimationFrame(fps);
+        }
+        requestAnimationFrame(fps);
+    </script>
+    <div id="perf" style="position:fixed;bottom:1rem;right:1rem;
+  font-size:.75rem;color:var(--fg-muted);z-index:400">
+    </div>
+</body>
+
+</html>
