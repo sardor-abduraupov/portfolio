@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sardor Rustamovich — Systems, Design, Code</title>
+    <title>Sardor Abduraupov — Systems-Oriented Developer & Designer</title>
 
     <!-- META -->
     <meta name="description"
-        content="Experimental portfolio of Sardor Rustamovich. Systems thinking, design engineering, motion, and intelligent software." />
+        content="Portfolio of Sardor Abduraupov — systems-oriented developer and designer focused on intelligent digital systems, interface clarity, and scalable product architecture." />
     <meta name="theme-color" content="#05060b" />
 
     <!-- FONTS (will be expanded later) -->
@@ -57,10 +57,10 @@
             --fg-soft: #c7cbee;
 
             /* Accents */
-            --accent-a: #7c7cff;
-            --accent-b: #5ef2c2;
-            --accent-c: #ff7ad9;
-            --accent-d: #ffd36a;
+            --accent-a: #6f7cff;
+            --accent-b: #6bc8b7;
+            --accent-c: #9f8cff;
+            --accent-d: #d6d9ff;
 
             /* Radii */
             --radius-xs: 4px;
@@ -89,8 +89,8 @@
         body.light {
             --bg-main: #f7f8fc;
             --fg-main: #0b0d12;
-            --fg-muted: #555;
-            --bg-card: rgba(0, 0, 0, 0.06);
+            --fg-muted: #3f4354;
+            --bg-card: rgba(0, 0, 0, 0.035);
             --accent-a: #5b5bff;
             --accent-b: #00bfa5;
             --accent-c: #d81b60;
@@ -109,8 +109,8 @@
         }
 
         h1 {
-            font-size: clamp(6rem, 14vw, 14rem);
-            line-height: 0.9;
+            font-size: clamp(3.8rem, 8vw, 8rem);
+            line-height: 0.92;
         }
 
         h2 {
@@ -123,10 +123,11 @@
         }
 
         p {
-            font-size: 1.15rem;
-            line-height: 1.9;
-            max-width: 72ch;
+            font-size: clamp(0.98rem, 1.05vw, 1.02rem);
+            line-height: 1.95;
+            max-width: 62ch;
             color: var(--fg-muted);
+            font-weight: 400;
         }
 
         /* =====================================================
@@ -135,7 +136,7 @@
         nav {
             position: fixed;
             left: 3vw;
-            top: 50%;
+            top: 42%;
             transform: translateY(-50%);
             z-index: 100;
         }
@@ -143,9 +144,10 @@
         nav a {
             display: block;
             margin: 1rem 0;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.14em;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
             text-decoration: none;
             color: var(--fg-muted);
             transition: color 0.3s var(--ease-main);
@@ -161,7 +163,7 @@
         .page {
             position: absolute;
             inset: 0;
-            padding: 22vh 14vw 24vh;
+            padding: 14vh clamp(2rem, 7vw, 10rem) 14vh;
             overflow-y: auto;
             display: none;
             box-sizing: border-box;
@@ -175,12 +177,14 @@
    GLASS CARDS (CONTENT DENSITY)
 ===================================================== */
         .card {
-            margin: var(--space-5) 0;
-            padding: var(--space-5);
-            background: var(--bg-card);
-            border-radius: var(--radius-md);
-            backdrop-filter: blur(var(--blur-md));
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            margin: 2.8rem 0;
+            padding: clamp(1.8rem, 3vw, 3rem);
+            background: rgba(255,255,255,0.026);
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 12px 36px rgba(0,0,0,0.14);
+            line-height: 1.8;
         }
 
         /* =====================================================
@@ -190,7 +194,7 @@
             position: fixed;
             inset: -20%;
             filter: blur(var(--blur-lg));
-            opacity: 0.35;
+            opacity: 0.07;
             pointer-events: none;
             z-index: -2;
         }
@@ -201,12 +205,12 @@
 
         .bg-b {
             background: radial-gradient(circle at 70% 60%, var(--accent-b), transparent 60%);
-            mix-blend-mode: screen;
+            mix-blend-mode: lighten;
         }
 
         .bg-c {
             background: radial-gradient(circle at 40% 80%, var(--accent-c), transparent 60%);
-            mix-blend-mode: overlay;
+            mix-blend-mode: soft-light;
         }
 
         /* =====================================================
@@ -220,7 +224,7 @@
             font-size: 12vw;
             font-weight: 900;
             letter-spacing: -0.05em;
-            opacity: 0.04;
+            opacity: 0.025;
             pointer-events: none;
             overflow: hidden;
         }
@@ -251,20 +255,16 @@
             border-radius: 3px;
         }
 
-        @media (max-width: 768px) {
-            #character {
-                width: 220px;
-                opacity: 0.35;
-            }
-        }
 
         .avatar {
-            width: 360px;
-            height: 360px;
-            border-radius: 50%;
+            width: 280px;
+            height: 280px;
+            border-radius: 32px;
             overflow: hidden;
             flex-shrink: 0;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.32);
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
         }
 
         .avatar img {
@@ -282,15 +282,16 @@
 
         @media (max-width: 768px) {
             .avatar {
-                width: 180px;
-                height: 180px;
+                width: 160px;
+                height: 160px;
+                border-radius: 22px;
             }
         }
 
         .hero-avatar {
             position: absolute;
-            top: 26vh;
-            right: 10vw;
+            top: 18vh;
+            right: 6vw;
             z-index: 2;
         }
 
@@ -316,17 +317,25 @@
             position: relative;
             z-index: 3;
         }
-        a {
-  color: var(--fg-main);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-  transition: border-color 0.25s ease, color 0.25s ease;
-}
 
-a:hover {
-  border-bottom-color: var(--accent-a);
-  color: var(--fg-main);
-}
+        a {
+            color: var(--fg-soft);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            transition: all 0.25s ease;
+        }
+
+        a:hover {
+            color: var(--fg-main);
+            border-bottom-color: rgba(255,255,255,0.4);
+        }
+
+        .hero-text,
+        .card,
+        .page > p,
+        .page > div {
+            max-width: 760px;
+        }
     </style>
     <!-- =========================
      ANIMATION LIBRARIES
@@ -341,19 +350,13 @@ a:hover {
 ========================== -->
     <div class="cursor"></div>
     <button id="themeToggle" style="position:fixed;top:2rem;right:2rem;z-index:300;
-  background:rgba(255,255,255,.08);
-  color:inherit;border:1px solid rgba(255,255,255,.2);
-  padding:.6rem 1rem;border-radius:999px;
-  backdrop-filter:blur(12px);cursor:pointer">
+  background:rgba(255,255,255,.05);
+  color:inherit;border:1px solid rgba(255,255,255,.12);
+  padding:.55rem .95rem;border-radius:999px;
+  backdrop-filter:blur(16px);cursor:pointer;font-size:.78rem;letter-spacing:.04em">
         Theme
     </button>
-    <button id="audioToggle" style="position:fixed;top:5.5rem;right:2rem;z-index:300;
-  background:rgba(255,255,255,.08);
-  color:inherit;border:1px solid rgba(255,255,255,.2);
-  padding:.6rem 1rem;border-radius:999px;
-  backdrop-filter:blur(12px);cursor:pointer">
-      Experimental Audio
-    </button>
+
     <!-- =========================
      BACKGROUND VISUAL SYSTEM
 ========================== -->
@@ -378,34 +381,12 @@ a:hover {
     </svg>
     <!-- Strong SVG illustrations (Cassie-style) -->
     <svg id="illustrations" viewBox="0 0 1600 900" preserveAspectRatio="none"
-        style="position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.6">
+        style="position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.075">
         <circle cx="300" cy="200" r="140" stroke="var(--accent-a)" fill="none" stroke-width="2" />
         <rect x="1000" y="120" width="260" height="260" rx="32" stroke="var(--accent-b)" fill="none" stroke-width="2" />
         <path d="M200 700 C500 500 900 900 1400 600" stroke="var(--accent-c)" fill="none" stroke-width="2" />
     </svg>
     <canvas id="gen-canvas" style="position:fixed;inset:0;z-index:-2;pointer-events:none"></canvas>
-    <!-- =========================
-     CHARACTER ILLUSTRATION LAYER
-========================== -->
-    <div id="character-layer" style="position:fixed;inset:0;pointer-events:none;z-index:-1;">
-        <svg id="character" viewBox="0 0 600 600"
-            style="position:absolute;right:8vw;bottom:6vh;width:380px;max-width:45vw;">
-
-            <!-- body -->
-            <circle cx="300" cy="200" r="70" fill="#7c7cff" />
-            <rect x="230" y="280" width="140" height="140" rx="28" fill="#8b8bff" />
-
-            <!-- laptop -->
-            <rect x="240" y="340" width="120" height="70" rx="12" fill="#e5e7ff" />
-
-            <!-- floating icons -->
-            <g id="char-icons">
-                <rect x="120" y="170" width="60" height="40" rx="8" fill="#5ef2c2" />
-                <circle cx="470" cy="190" r="24" fill="#ff7ad9" />
-                <rect x="420" y="260" width="50" height="32" rx="6" fill="#ffd36a" />
-            </g>
-        </svg>
-    </div>
     <!-- =========================
        GLOBAL NAVIGATION
   ========================== -->
@@ -427,40 +408,31 @@ a:hover {
 
         <div class="hero-avatar">
             <div class="avatar">
-                <img src="/з.jpeg" alt="SR avatar" />
+                <img src="SR_olve-gray.jpg" alt="Sardor Abduraupov portrait" />
             </div>
         </div>
 
         <div class="hero-text">
             <p>
-                Designer. Developer. Student.
-                Building intelligent systems that help people move forward.
+                Systems-oriented developer and product designer.
+                Building intelligent digital experiences with clarity, structure, and restraint.
             </p>
 
             <p>
-                Focused on AI, product design, and long-term system thinking.
-                Currently studying, building applications, and preparing for
-                Ivy League and MIT-level engineering paths.
+                Focused on AI systems, interface design, and scalable product architecture.
+                I care about reducing complexity and designing technology that feels calm, intentional, and useful.
             </p>
 
             <div class="card">
-                <p><strong>Primary Work</strong></p>
+                <p><strong>Selected Work</strong></p>
                 <p>
-                    Axis — AI platform for faster, more effective learning<br>
-                    SRGram — privacy-first messenger with integrated AI
-                </p>
-            </div>
-            <div class="card">
-                <p><strong>What I Build</strong></p>
-                <p>
-                    I work on AI-powered educational platforms, privacy-focused communication tools,
-                    and experimental applications that explore how intelligent systems can
-                    support learning and productivity.
+                    Axis — AI-assisted learning platform designed around clarity, structure, and cognitive efficiency.<br><br>
+                    SRGram — privacy-focused communication system exploring intelligent interaction and minimal digital friction.
                 </p>
             </div>
         </div>
         <div class="marquee">
-            SR · DESIGN · AI · SYSTEMS · FUTURE ·
+            SYSTEMS · CLARITY · INTELLIGENCE ·
         </div>
     </section>
 
@@ -472,9 +444,8 @@ a:hover {
 
         <div class="card">
             <p>
-                My name is Sardor Abduraupov. I am a student full-stack developer,
-                UI/UX designer, and founder with a strong interest in systems thinking,
-                engineering discipline, and long-term technological impact.
+                My name is Sardor Abduraupov. I am a systems-oriented developer and designer
+                interested in product architecture, interface clarity, and long-term technological systems.
             </p>
 
             <p>
@@ -491,9 +462,8 @@ a:hover {
             </p>
 
             <p>
-                My goal is to study at a top global university and contribute to
-                international-scale technology products that prioritize clarity,
-                robustness, and ethical impact.
+                I care about building systems that remain coherent as they scale —
+                products that prioritize clarity, robustness, and long-term usefulness.
             </p>
         </div>
 
@@ -514,13 +484,12 @@ a:hover {
         <h1>Profile</h1>
         <div class="card">
             <p>
-                I am <strong>Sardor Abduraupov</strong> — a student designer and developer
-                focused on building intelligent systems that help people shape their future.
+                I am <strong>Sardor Abduraupov</strong> — a developer and designer focused on
+                building thoughtful digital systems that scale with clarity and intention.
             </p>
             <p>
-                I am currently finishing school while preparing for top global universities,
-                including the Ivy League and MIT. Alongside academics, I actively build
-                real-world applications with a strong focus on artificial intelligence.
+                Alongside academics, I actively build real-world applications focused on
+                artificial intelligence, communication systems, and digital product design.
             </p>
             <p>
                 My work combines product thinking, engineering discipline, and design clarity.
@@ -531,10 +500,10 @@ a:hover {
         <div class="card">
             <p><strong>Current Focus</strong></p>
             <p>
-                — studying and strengthening academic foundations<br>
-                — building and shipping personal applications<br>
-                — deepening expertise in AI systems and models<br>
-                — preparing to build my own startup
+                — AI-assisted systems<br>
+                — interface clarity and product architecture<br>
+                — privacy-focused communication tools<br>
+                — scalable digital experiences
             </p>
         </div>
         <div class="card">
@@ -560,8 +529,8 @@ a:hover {
                 but on architectures that remain coherent as complexity increases.
             </p>
             <p>
-                I believe software should feel calm, predictable, and intentional.
-                Motion exists to guide understanding, not to distract attention.
+                I believe software should feel calm, coherent, and intentional.
+                Interfaces should reduce cognitive friction rather than compete for attention.
             </p>
             <p>
                 Good systems compound. Poor systems accumulate hidden cost.
@@ -633,8 +602,8 @@ a:hover {
             <div>
                 <p><strong>X (Twitter)</strong></p>
                 <p>
-                    <a href="https://x.com/AbduraupovS" target="_blank" rel="noopener">
-                        @AbduraupovS
+                    <a href="https://x.com/srabduraupov" target="_blank" rel="noopener">
+                        @srabduraupov
                     </a>
                 </p>
             </div>
@@ -689,8 +658,8 @@ a:hover {
         <div class="card">
             <h3>Additional Projects</h3>
             <p>
-                Educational tools, web applications, and experimental AI-driven products
-                built as part of ongoing learning and exploration.
+                Experimental digital products exploring AI interaction, learning systems,
+                communication architecture, and interface simplicity.
             </p>
         </div>
     </section>
@@ -742,7 +711,7 @@ a:hover {
                 'stroke',
                 ['var(--accent-a)', 'var(--accent-b)', 'var(--accent-c)'][i]
             );
-            wave.style.opacity = 0.25;
+            wave.style.opacity = 0.06;
         });
 
         function generateWave(path, amplitude, offset, phase) {
@@ -762,7 +731,7 @@ a:hover {
         function animateWaves() {
             time += 0.012;
             // Audio-responsive wave amplitudes (subtle but clear)
-            const e = (typeof audioEnabled !== "undefined" && audioEnabled) ? audioEnergy * 120 : 0;
+            const e = 0;
             generateWave(waves[0], 60 + e, time * 180, time);
             generateWave(waves[1], 100 + e * 0.8, -time * 120, time * 1.3);
             generateWave(waves[2], 160 + e * 0.6, time * 90, -time * 0.8);
@@ -840,29 +809,6 @@ a:hover {
         }
         window.addEventListener('hashchange', animateActivePage);
         animateActivePage();
-        function moveCharacter(page) {
-            const map = {
-                home: { x: 0, y: 0, scale: 1 },
-                profile: { x: -120, y: -40, scale: 0.9 },
-                projects: { x: -80, y: -120, scale: 0.85 },
-                vision: { x: -160, y: -80, scale: 0.9 },
-                contact: { x: -60, y: -40, scale: 0.85 }
-            };
-            const p = map[page] || map.home;
-            gsap.to('#character', {
-                x: p.x,
-                y: p.y,
-                scale: p.scale,
-                duration: 1.2,
-                ease: 'power3.out'
-            });
-        }
-
-        window.addEventListener('hashchange', () => {
-            moveCharacter(location.hash.replace('#', ''));
-        });
-
-        moveCharacter(location.hash.replace('#', '') || 'home');
         /* ---------------------------------
            SCROLL-DRIVEN BACKGROUND DEPTH
         --------------------------------- */
@@ -894,23 +840,6 @@ a:hover {
         gsap.to('#illustrations circle', { y: -120, scrollTrigger: { scrub: true } });
         gsap.to('#illustrations rect', { y: 160, rotate: 8, transformOrigin: 'center', scrollTrigger: { scrub: true } });
         gsap.to('#illustrations path', { strokeDasharray: 1200, strokeDashoffset: 1200, scrollTrigger: { scrub: true } });
-        // Character idle motion
-        gsap.to('#character', {
-            y: -12,
-            duration: 2.4,
-            yoyo: true,
-            repeat: -1,
-            ease: 'sine.inOut'
-        });
-
-        gsap.to('#char-icons > *', {
-            y: -20,
-            stagger: 0.3,
-            duration: 2,
-            yoyo: true,
-            repeat: -1,
-            ease: 'sine.inOut'
-        });
     </script>
     <script>
         /* =========================
@@ -926,7 +855,7 @@ a:hover {
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
-        const particles = Array.from({ length: 90 }, () => ({
+        const particles = Array.from({ length: 42 }, () => ({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
             vx: (Math.random() - 0.5) * 0.25,
@@ -934,41 +863,13 @@ a:hover {
         }));
 
         let audioEnergy = 0;
-        // --- Experimental Audio Mode State ---
-        let audioEnabled = false;
-        let audioCtx, analyser, mic, data;
-
-        // --- Audio Activation on Click ---
-        function enableAudioReactive() {
-          if (audioEnabled) return;
-
-          navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-            audioCtx = new AudioContext();
-            analyser = audioCtx.createAnalyser();
-            mic = audioCtx.createMediaStreamSource(stream);
-
-            mic.connect(analyser);
-            analyser.fftSize = 256;
-            data = new Uint8Array(analyser.frequencyBinCount);
-
-            audioEnabled = true;
-            audioLoop();
-          }).catch(() => {});
-        }
-
-        function audioLoop() {
-          if (!audioEnabled) return;
-          analyser.getByteFrequencyData(data);
-          audioEnergy = data.reduce((a, b) => a + b, 0) / data.length / 255;
-          requestAnimationFrame(audioLoop);
-        }
 
         function drawParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = 'rgba(124,124,255,0.15)';
 
             // Amplified canvas response to audio when enabled
-            const energy = audioEnabled ? audioEnergy : 0;
+            const energy = 0;
             particles.forEach(p => {
                 p.x += p.vx * (1 + energy * 10);
                 p.y += p.vy * (1 + energy * 10);
@@ -998,38 +899,9 @@ a:hover {
             document.documentElement.offsetHeight; // force reflow
             document.documentElement.style.display = '';
         };
-        // Experimental Audio Toggle Button
-        document.getElementById('audioToggle').onclick = () => {
-          enableAudioReactive();
-        };
-        /* =========================
-   PERFORMANCE MONITOR
-========================= */
-        let frames = 0;
-        let last = performance.now();
-        function fps(now) {
-            frames++;
-            if (now - last >= 1000) {
-                document.getElementById('perf').textContent = `FPS ${frames}`;
-                frames = 0;
-                last = now;
-            }
-            requestAnimationFrame(fps);
-        }
-        requestAnimationFrame(fps);
-        // Audio-reactive background glow
-function audioBgPulse() {
-  const glow = audioEnabled ? audioEnergy * 0.6 : 0;
-  document.querySelectorAll('.bg-layer').forEach(bg => {
-    bg.style.opacity = 0.25 + glow;
-  });
-  requestAnimationFrame(audioBgPulse);
-}
-audioBgPulse();
+        // (Performance monitor removed)
     </script>
-    <div id="perf" style="position:fixed;bottom:1rem;right:1rem;
-  font-size:.75rem;color:var(--fg-muted);z-index:400">
-    </div>
+    <div id="perf" style="display:none"></div>
 </body>
 
 </html>
